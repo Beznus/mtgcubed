@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  client:
+    build: ./client
+    ports:
+      - 8083:8083
+    volumes:
+      - ./client:/data
+    environment:
+      - API_URL=http://localhost:8081/
+
+  graphql-server:
+    build: ./graphql-server
+    ports:
+      - 8084:8084
+    volumes:
+      - ./graphql-server:/data
+    depends_on:
+      - server-database
+    environment:
+      - DATABASE_URL=server-database:27017
+
+  server-database:
+    image: mongo
+    ports:
+      - 27018:27018
+    volumes:
+      - ./db:/data/db
