@@ -20,5 +20,5 @@ var CardSchema = new Schema({
   imageName: String
 })
 
-const Card = mongoose.model("Card", CardSchema)
-module.exports = Card;
+const Card = Mongoose.model("Card", CardSchema)
+module.exports = { Card };

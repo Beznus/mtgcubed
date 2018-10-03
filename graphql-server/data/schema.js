@@ -5,7 +5,7 @@ type Card {
   names: [ String ]
   layout: String
   manaCost: String
-  cmc: Number
+  cmc: Int
   colors: [ String ]
   colorIdentity: [ String ]
   type: String
@@ -15,7 +15,7 @@ type Card {
   text: String
   power: String
   toughness: String
-  loyalty: Number
+  loyalty: Int
   imageName: String
 }
 # the schema allows the following two queries:
@@ -37,4 +37,4 @@ schema {
 }
 `;
 
-module.exports = [typeDefinitions];
+module.exports = typeDefinitions;

@@ -1,22 +1,20 @@
 const express = require('express');
-const { apolloServer } = require('graphql-tools');
+const { ApolloServer, gql } = require('apollo-server-express');
 const Schema = require('./data/schema');
 const Resolvers = require('./data/resolvers');
 
 // var seedCards = require('./services/loadCards.js');
 
 const GRAPHQL_PORT = 8080;
+const typeDefs = Schema
+const resolvers = Resolvers
+const server = new ApolloServer({ typeDefs, resolvers });
 
-var graphQLServer = express();
-graphQLServer.use('/graphql', apolloServer({
-  graphiql: true,
-  pretty: true,
-  schema: Schema,
-  resolvers: Resolvers,
-  //mocks: Mocks,
-}));
-graphQLServer.listen(GRAPHQL_PORT, () => console.log(
-  `GraphQL Server is now running on http://localhost:${GRAPHQL_PORT}/graphql`
-));
+const app = express();
+// app.use('/seedCards', seedCards);
 
-// graphQLServer.use('/seedCards', seedCards);
+server.applyMiddleware({ app });
+
+app.listen({ port: GRAPHQL_PORT }, () =>
+  console.log(`🚀 Server ready at http://localhost:${GRAPHQL_PORT}${server.graphqlPath}`)
+);
